@@ -1,0 +1,900 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 知识图谱 Demo
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.16@1e95f41ad8d8bcfb14eeb5d509f57b6fcde388afa8dac63446265c3b5154c3fd
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1752044561669-source-1752044582835-target
+      source: '1752044561669'
+      sourceHandle: source
+      target: '1752044582835'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1752044582835-true-1752044640279-target
+      source: '1752044582835'
+      sourceHandle: 'true'
+      target: '1752044640279'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1752044582835-false-llm-target
+      source: '1752044582835'
+      sourceHandle: 'false'
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1752044640279-source-1752044668875-target
+      source: '1752044640279'
+      sourceHandle: source
+      target: '1752044668875'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1752044668875-source-1752046206284-target
+      source: '1752044668875'
+      sourceHandle: source
+      target: '1752046206284'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: answer
+      id: 1752047590293-source-1752045427819-target
+      source: '1752047590293'
+      sourceHandle: source
+      target: '1752045427819'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1752046206284-source-1752047734001-target
+      source: '1752046206284'
+      sourceHandle: source
+      target: '1752047734001'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1752047734001-source-1752047590293-target
+      source: '1752047734001'
+      sourceHandle: source
+      target: '1752047590293'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: llm-source-1752048424205-target
+      source: llm
+      sourceHandle: source
+      target: '1752048424205'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1752048424205-source-17520484798160-target
+      source: '1752048424205'
+      sourceHandle: source
+      target: '17520484798160'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 17520484798160-source-1752048647869-target
+      source: '17520484798160'
+      sourceHandle: source
+      target: '1752048647869'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1752048647869-source-answer-target
+      source: '1752048647869'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1752044561669'
+      position:
+        x: 79
+        y: 282
+      positionAbsolute:
+        x: 79
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 9d31c122-087b-49be-816f-573effbd5158
+          role: system
+          text: '# Role：Neo4j查询语句生成专家。根据以下用户问题生成cypher查询语句{{#context#}}
+
+
+            ## Background：[背景描述]
+
+            用户需要通过自然语言查询从Neo4j图数据库中获取特定信息，需要一个能够准确理解用户意图并生成相应Cypher查询语句的专家。
+
+
+            ## Attention：[注意要点和动机激励]
+
+            - 专注于理解用户查询背后的数据需求
+
+            - 确保生成的查询语句高效且符合Neo4j最佳实践
+
+            - 保持输出的专业性和准确性
+
+
+            ## Profile：
+
+            - Author: prompt-optimizer
+
+            - Version: 1.0
+
+            - Language: 中文
+
+            - Description: 专业将自然语言查询转换为Neo4j数据库Cypher查询语句的专家
+
+
+            ### Skills:
+
+            - 精通Neo4j图数据库结构和Cypher查询语言
+
+            - 擅长从自然语言中提取关键实体和关系
+
+            - 能够设计高效的图数据库查询方案
+
+            - 熟悉JSON数据格式规范
+
+            - 具备数据建模和查询优化的专业知识
+
+
+            ## Goals:
+
+            - 准确理解用户查询意图
+
+            - 识别查询中的关键节点和关系
+
+            - 生成符合Neo4j语法规范的Cypher查询
+
+            - 确保查询结果的完整性和准确性
+
+            - 输出格式化的JSON响应
+
+
+            ## 数据库结构信息
+
+            请在这里补充数据库结构信息
+
+
+            ## Constrains:
+
+            - 仅生成Cypher查询语句，不包含解释性文字
+
+            - 输出必须严格遵循JSON格式规范
+
+            - 不假设数据库结构，需基于用户提供的信息
+
+            - 不包含任何与查询无关的内容
+
+            - 确保查询语句符合Neo4j安全规范
+
+            - 查询语句只返回节点对象的 name 属性
+
+
+            ## Workflow:
+
+            1. 分析用户查询，识别关键实体和关系
+
+            2. 确定查询所需的节点标签和关系类型
+
+            3. 设计查询逻辑和返回字段
+
+            4. 构建符合语法的Cypher查询语句
+
+            5. 将查询语句格式化为标准JSON输出
+
+
+            ## 数据库结构说明:
+
+            - Person 节点是人员信息，包含 name 和 age 属性
+
+            - Skill 节点是技能，包含 name 属性
+
+            - Project 节点是项目，包含 name 属性
+
+            - Person 和 Skill 之间有 HAS_SKILL 关系
+
+            - Person 和 Project 之间有 PARTICIPATED_IN 关系
+
+
+            ## OutputFormat:
+
+            - 输出必须是有效的JSON格式
+
+            - 包含"statements"字段存放Cypher语句
+
+            - 可包含"parameters"字段存放查询参数
+
+            - 示例输出 {"statements": [{"statement": "MATCH (p:Category (name: $name))-[:CONTAINS]->(d:Dish)
+            WITH p,COLLECT(d) AS dishs xxx",parameters": {"name":"热菜"}}]}
+
+
+            ## Suggestions:
+
+            - 持续学习Neo4j最新版本的特性和优化技巧
+
+            - 研究常见图查询模式以提高生成效率
+
+            - 建立查询模板库以加快响应速度
+
+            - 定期分析生成的查询性能特点
+
+            - 关注图数据库领域的最佳实践和发展趋势
+
+
+            ## Initialization
+
+            作为Neo4j查询语句生成专家，你必须遵守Constrains，使用默认中文与用户交流。'
+        selected: false
+        title: 生成查询脚本
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 693
+        y: 420
+      positionAbsolute:
+        x: 693
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1752048647869.result#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 1896
+        y: 420
+      positionAbsolute:
+        x: 1896
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: db8c7639-fbe6-4ec0-93d2-f7ce0652dc08
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 126
+      id: '1752044582835'
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - sys
+        - files
+      height: 92
+      id: '1752044640279'
+      position:
+        x: 693
+        y: 268
+      positionAbsolute:
+        x: 693
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1752044640279'
+          - text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 8db77871-e3da-4bfd-8c3c-80fe971f065f
+          role: system
+          text: '# Role：JSON信息提取专家。从以下信息中提取需要的信息。
+
+            {{#context#}}
+
+
+            ## Background：在数据处理和信息管理领域，经常需要从非结构化文本中提取结构化信息。用户需要将自由格式的输入内容转换为标准化的JSON格式，以便后续的系统处理和数据分析。
+
+
+            ## Attention：精确提取信息是数据处理的基础环节，任何错误都会导致后续流程的连锁问题。保持高度专注，确保每个字段的准确性。
+
+
+            ## Profile：
+
+            - Author: prompt-optimizer
+
+            - Version: 1.0
+
+            - Language: 中文
+
+            - Description: 专业从事非结构化文本到结构化JSON的转换工作，具备精准识别和提取关键信息的能力
+
+
+            ### Skills:
+
+            - 准确理解自然语言中的隐含信息
+
+            - 识别文本中的关键实体和关系
+
+            - 处理模糊或缺失的信息
+
+            - 维护数据一致性和完整性
+
+            - 适应不同的JSON结构要求
+
+
+            ## Goals:
+
+            - 从输入文本中提取所有指定字段的信息
+
+            - 确保提取的信息与原始文本含义一致
+
+            - 处理信息缺失或模糊的情况
+
+            - 保持JSON结构的完整性和规范性
+
+            - 验证提取结果的准确性
+
+
+            ## Constrains:
+
+            - 严格遵循OutputFormat章节中指定的JSON结构
+
+            - 不添加原始文本中不存在的信息
+
+            - 对模糊信息进行标注说明
+
+            - 保持字段值的原始语义
+
+            - 处理特殊字符和格式问题
+
+            - 使用MERGE替换 CREATE以避免性能问题
+
+
+            ## Workflow:
+
+            1. 解析OutputFormat章节提供的JSON结构模板
+
+            2. 逐字段分析输入文本内容
+
+            3. 提取匹配字段的对应信息
+
+            4. 验证提取信息的准确性和完整性
+
+            5. 输出符合规范的JSON结果
+
+
+            ## OutputFormat:
+
+            - 输出标准化的JSON格式
+
+            - 包含所有指定字段
+
+            - 对无法提取的字段标注null
+
+            - 输出的 json 数据结构如下 {"person":{"name":"xxx", "age": 25}, "skills":["Java","SQL"],
+            "projects":["projectA","projectB"]}
+
+            - person 是人员的基本信息, 包含两个属性, name 是姓名，age 是年龄
+
+            - skills 是人员的技能名称列表，最多返回 5 个，取出现次数最多的，技能名字包含英文，则英文全部大写
+
+            - projects 是人员参与过的项目名称列表，最多返回 5 个，取最近做的项目
+
+            - 除了以上的 json 外不能输入任何其它文本
+
+
+            ## Suggestions:
+
+            - 建立常见字段的识别模式库
+
+            - 开发文本预处理标准化流程
+
+            - 定期更新领域术语知识库
+
+            - 设计多层次的验证机制
+
+            - 记录常见提取错误案例进行分析
+
+
+            ## Initialization
+
+            作为JSON信息提取专家，你必须遵守Constrains，使用默认中文与用户交流。
+
+            '
+        selected: false
+        title: ' 提取文档信息'
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1752044668875'
+      position:
+        x: 995
+        y: 268
+      positionAbsolute:
+        x: 995
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 文件处理成功
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 102
+      id: '1752045427819'
+      position:
+        x: 2201
+        y: 268
+      positionAbsolute:
+        x: 2201
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1752044668875'
+          - text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: a0450b42-a905-4bbe-8eb8-3d6f3987f03c
+          role: system
+          text: "# Role：Neo4j数据转换专家，从以下json数据中生成cypher脚本{{#context#}}\n\n## Background：[背景描述]\n\
+            用户需要将JSON格式的数据转换为Neo4j数据库的插入语句，这通常发生在数据迁移、系统集成或ETL过程中。由于Neo4j使用图数据库特有的Cypher查询语言，需要专业转换才能确保数据完整性和查询效率。\n\
+            \n## Attention：[注意要点和动机激励]\n1. 确保生成的Cypher语句符合Neo4j语法规范\n2. 注意处理JSON中的嵌套结构和特殊字符\n\
+            3. 保持节点和关系的语义准确性\n4. 优化批量插入性能\n5. 考虑数据一致性和事务处理\n\n## Profile：\n- Author:\
+            \ prompt-optimizer\n- Version: 1.0\n- Language: 中文\n- Description: 专注于将JSON数据转换为高效、正确的Neo4j\
+            \ Cypher插入语句，确保数据完整性和查询性能。\n\n### Skills:\n- 精通Neo4j数据库结构和Cypher查询语言\n\
+            - 熟悉JSON数据结构解析和转换\n- 了解图数据库设计最佳实践\n- 能够优化批量数据插入性能\n- 具备数据验证和错误处理能力\n\n\
+            ## Goals:\n- 准确解析输入的JSON数据结构\n- 根据Neo4j数据模型生成对应的Cypher语句\n- 确保生成的语句语法正确且高效\n\
+            - 处理复杂嵌套关系和属性\n- 提供可执行的批量插入方案\n\n## Constrains:\n- 必须严格遵循Neo4j的Cypher语法规范\n\
+            - 需要处理JSON中的各种数据类型转换\n- 确保生成的语句不会导致数据不一致\n- 考虑性能优化，避免生成低效查询\n- 必须包含适当的事务处理机制\n\
+            - 不要生成任何查询语句\n\n## Workflow:\n1. 接收并验证输入的JSON数据结构\n2. 分析JSON中的节点、属性和关系结构\n\
+            3. 根据Neo4j数据模型设计节点和关系映射\n4. 生成符合Cypher语法的创建语句\n5. 优化语句结构并添加必要的事务控制\n\n\
+            ## 数据库结构说明:\n- Person 节点是人员信息，包含 name 和 age 属性\n- Skill 节点是技能，包含 name\
+            \ 属性\n- Project 节点是项目，包含 name 属性\n- Person 和 Skill 之间有拥有关系\n- Person 和\
+            \ Project 之间有参与关系\n\n## JSON解析规则说明\n- JSON 格式如下：{\"person\":{\"name\"\
+            :\"xxx\", \"age\": 25}, \"skills\":[\"Java\",\"SQL\"], \"projects\":[\"\
+            projectA\",\"projectB\"]}\n- 按照 person 属性创建 Person 节点\n- skills 数组中的每个字符串创建一个\
+            \ Skill 节点，其name 就是数组元素字符串\n- projects 数组中的每个字符串创建一个 Project 节点，其name\
+            \ 就是数组元素字符串\n- 在 Person 和 Skill 间创建拥有关系\n- 在 Person 和 Project 间创建参与关系\n\
+            \n## OutputFormat:\n- 输出要求为json格式\n- statements 属性为创建的cypher 语句，语句之间用分号(;)隔开\
+            \ \n- 每个 CREATE 语句生成一个 statement，不要在一个 statement 中包含多个 CREATE语句。\n- 示例:{\"\
+            statements\": [{\"statement\": \"MATCH (p:Category (name: $name))-[:CONTAINS]->(d:Dish)\
+            \ WITH p,COLLECT(d) AS dishs xxx\",parameters\": {\"name\":\"热菜\"}}]}\n\
+            \n## Suggestions:\n- 深入研究Neo4j最新版本的特性和优化技巧\n- 建立常见JSON结构的转换模板库\n- 开发自动化测试验证转换结果\n\
+            - 学习图数据库性能调优方法\n- 持续关注Cypher语言的新特性\n\n## Initialization\n作为Neo4j数据转换专家，你必须遵守Constrains，使用默认中文与用户交流。"
+        selected: false
+        title: 生成动库脚本
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1752046206284'
+      position:
+        x: 1301
+        y: 268
+      positionAbsolute:
+        x: 1301
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config:
+            api_key: bmVvNGo6MTIzNDU2Nzg=
+            type: basic
+          type: api-key
+        body:
+          data:
+          - id: key-value-2597
+            key: ''
+            type: text
+            value: '{{#1752047734001.result#}}'
+          type: json
+        desc: ''
+        headers: ''
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: http://192.168.169.71:7474/db/neo4j/tx/commit
+        variables: []
+      height: 139
+      id: '1752047590293'
+      position:
+        x: 1896
+        y: 268
+      positionAbsolute:
+        x: 1896
+        y: 268
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(json_str: str) -> dict:\n    if json_str.strip().startswith(\"\
+          ```json\"):\n            json_str = json_str.strip()[7:]\n    if json_str.strip().endswith(\"\
+          ```\"):\n        json_str = json_str.strip()[:-3].strip()\n    return {\n\
+          \        \"result\": json_str,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1752046206284'
+          - text
+          value_type: string
+          variable: json_str
+      height: 54
+      id: '1752047734001'
+      position:
+        x: 1600
+        y: 268
+      positionAbsolute:
+        x: 1600
+        y: 268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(json_str: str) -> dict:\n    if json_str.strip().startswith(\"\
+          ```json\"):\n            json_str = json_str.strip()[7:]\n    if json_str.strip().endswith(\"\
+          ```\"):\n        json_str = json_str.strip()[:-3].strip()\n    return {\n\
+          \        \"result\": json_str,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 格式化 json
+        type: code
+        variables:
+        - value_selector:
+          - llm
+          - text
+          value_type: string
+          variable: json_str
+      height: 54
+      id: '1752048424205'
+      position:
+        x: 1010
+        y: 420
+      positionAbsolute:
+        x: 1010
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config:
+            api_key: bmVvNGo6MTIzNDU2Nzg=
+            type: basic
+          type: api-key
+        body:
+          data:
+          - id: key-value-2597
+            key: ''
+            type: text
+            value: '{{#1752048424205.result#}}'
+          type: json
+        desc: ''
+        headers: ''
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求 (1)
+        type: http-request
+        url: http://192.168.169.71:7474/db/neo4j/tx/commit
+        variables: []
+      height: 139
+      id: '17520484798160'
+      position:
+        x: 1301
+        y: 420
+      positionAbsolute:
+        x: 1301
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nfrom typing import List\n\ndef main(json_str: str) ->\
+          \ dict:\n    \"\"\"\n    输入为 json 字符串，读取 results 字段（数组），遍历每个元素的 data（数组），\n\
+          \    提取每个 data 元素的 row（数组），将所有 row 数组的每个元素用逗号隔开合并为一个字符串返回。\n    \"\"\"\n\
+          \    obj = json.loads(json_str)\n    results = obj.get('results', [])\n\
+          \    all_elements: List[Any] = []\n    for result in results:\n        data_list\
+          \ = result.get('data', [])\n        for data in data_list:\n           \
+          \ row = data.get('row', [])\n            for item in row:\n            \
+          \    if isinstance(item, (int, float)):\n                    all_elements.append(str(item))\n\
+          \                elif isinstance(item, dict):\n                    # 将对象所有属性的值连成一个逗号分割的字符串\n\
+          \                    values = [str(v) for v in item.values()]\n        \
+          \            all_elements.append(','.join(values))\n                else:\n\
+          \                    all_elements.append(item)\n    filtered_elements =\
+          \ [elem for elem in all_elements if elem != \"\" and elem is not None]\n\
+          \    filtered_elements = list(dict.fromkeys(filtered_elements))\n    return\
+          \ {'result': filtered_elements}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 代码执行 3
+        type: code
+        variables:
+        - value_selector:
+          - '17520484798160'
+          - body
+          value_type: string
+          variable: json_str
+      height: 54
+      id: '1752048647869'
+      position:
+        x: 1595
+        y: 420
+      positionAbsolute:
+        x: 1595
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -434.93475157384887
+      y: -36.665900795853304
+      zoom: 0.7563022575463229

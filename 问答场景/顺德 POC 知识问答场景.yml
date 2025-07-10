@@ -1,0 +1,690 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 顺德 POC 知识问答场景
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.16@1e95f41ad8d8bcfb14eeb5d509f57b6fcde388afa8dac63446265c3b5154c3fd
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: llm-source-1751600374406-target
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: '1751600374406'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1751600374406-source-1751600399661-target
+      selected: false
+      source: '1751600374406'
+      sourceHandle: source
+      target: '1751600399661'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1751600399661'
+        sourceType: iteration-start
+        targetType: knowledge-retrieval
+      id: 1751600399661start-source-1751600414210-target
+      selected: false
+      source: 1751600399661start
+      sourceHandle: source
+      target: '1751600414210'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1751600485487-source-answer-target
+      selected: false
+      source: '1751600485487'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1751600277302-source-1751954199133-target
+      selected: false
+      source: '1751600277302'
+      sourceHandle: source
+      target: '1751954199133'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1751954199133-2-llm-target
+      selected: false
+      source: '1751954199133'
+      sourceHandle: '2'
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1751954199133-1-1751954226920-target
+      selected: false
+      source: '1751954199133'
+      sourceHandle: '1'
+      target: '1751954226920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: http-request
+      id: 1751954226920-source-1751954284519-target
+      selected: false
+      source: '1751954226920'
+      sourceHandle: source
+      target: '1751954284519'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1751954284519-source-1751954344643-target
+      selected: false
+      source: '1751954284519'
+      sourceHandle: source
+      target: '1751954344643'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: iteration
+        targetType: llm
+      id: 1751600399661-source-1751600485487-target
+      source: '1751600399661'
+      sourceHandle: source
+      target: '1751600485487'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1751954344643-source-1751961904270-target
+      source: '1751954344643'
+      sourceHandle: source
+      target: '1751961904270'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1751600277302'
+      position:
+        x: 30
+        y: 286
+      positionAbsolute:
+        x: 30
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: a84b762f-17a5-4bcc-8534-a755f55b23c5
+          role: system
+          text: "# 角色\n你是一位精通自然语言处理的文本分析专家。\n\n# 任务\n你的任务是准确地从用户输入的文本中提取每一个独立问题的核心名词和名词性短语。这些名词和短语应当能够抓住每个问题的关键信息（如主体、对象、时间、地点、属性等），并且组合起来能够反映原问题的核心查询意图。\n\
+            \n# 输入\n用户输入的文本：{{#sys.query#}}\n\n# 处理步骤\n1.  **分割问题**: 首先，识别并分割输入文本中的每一个独立问题。\n\
+            2.  **识别核心**: 对于每一个问题，识别出构成问题核心意义的名词和名词性短语。\n    *   重点关注代表问题主体、对象、时间、地点、限定条件等的词语。\n\
+            \    *   确保提取的词语组合起来能够反映原问题的核心查询意图。\n3.  **过滤非核心**: 原则上，忽略疑问词（如“多少”、“哪里”、“谁”、“什么”、“怎么样”、“吗”等）、动词、助词、介词、连词以及形容词副词等修饰性成分，除非它们是构成核心名词短语不可或缺的一部分（例如，“市场份额”中的“市场”）。\n\
+            4.  **格式化输出**: 按照指定的“输出规范”格式化提取结果。\n\n# 原则\n1.  **信息完整性**: 提取的名词和名词性短语必须保留问题的核心信息，不能丢失关键要素。\n\
+            2.  **成分纯粹性**: 输出结果中不应包含除名词和名词性短语以外的词语类型（如动词、疑问词等），除非它们是名词短语的固有部分或对理解核心意义至关重要。\n\
+            3.  **问题区分**: 必须清晰地区分每个问题提取出的名词和短语，不能混淆。\n4.  **忠于原文**: 提取的内容必须基于原始问题，不能添加或猜测信息。\n\
+            \n# 示例\n## 示例 1\n输入: \"东邵渠村村域面积多少平方千米?,东邵渠村有农户多少人?,1933年东邵渠村属于哪里?\"\n\
+            输出: \"东邵渠村村域面积多少平方千米?,东邵渠村有农户多少人?,1933年东邵渠村属于哪里?\",\"东邵渠村村域面积,东邵渠村农户人数\"\
+            ,\"1933年东邵渠村所属地\"\n\n## 示例 2\n输入: \"北京今天的天气怎么样？\"\n输出:  \"北京今天的天气怎么样？\"\
+            ,\"北京今天天气\"\n\n## 示例 3\n输入: \"请介绍一下长城。长城是谁修建的？修建长城花了多少年？\"\n输出: \"请介绍一下长城。长城是谁修建的？修建长城花了多少年？\"\
+            ,\"长城,长城修建者\",\"长城修建耗时\"\n\n## 示例 4\n输入: \"2023年全球智能手机出货量排名前三的品牌有哪些？它们各自的市场份额是多少？\"\
+            \n输出: \"2023年全球智能手机出货量排名前三的品牌有哪些？它们各自的市场份额是多少？\",\"2023年全球智能手机出货量排名前三品牌\"\
+            ，\"2023年全球智能手机出货量排名前三品牌市场份额\"\n\n# 输出规范\n将识别出来的各个问题用英文逗号分割，如：\"Question1\"\
+            ,\"Question2\",\"Question3\""
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 638
+        y: 473
+      positionAbsolute:
+        x: 638
+        y: 473
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1751600485487.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 2422
+        y: 286
+      positionAbsolute:
+        x: 2422
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(input_str: str) -> dict:\n    if not input_str:\n      \
+          \  return {'result': []}\n    \n    input_str = input_str.strip().strip('\"\
+          ')\n    items = [item.strip() for item in input_str.split(',')]\n    \n\
+          \    return {'result': items[:5]}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - llm
+          - text
+          value_type: string
+          variable: input_str
+      height: 54
+      id: '1751600374406'
+      position:
+        x: 942
+        y: 473
+      positionAbsolute:
+        x: 942
+        y: 473
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 240
+        is_parallel: true
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1751600374406'
+        - result
+        output_selector:
+        - '1751600414210'
+        - result
+        output_type: array[object]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1751600399661start
+        title: 迭代
+        type: iteration
+        width: 508
+      height: 240
+      id: '1751600399661'
+      position:
+        x: 1246
+        y: 473
+      positionAbsolute:
+        x: 1246
+        y: 473
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 508
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1751600399661start
+      parentId: '1751600399661'
+      position:
+        x: 60
+        y: 96
+      positionAbsolute:
+        x: 1306
+        y: 569
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        dataset_ids:
+        - RdvUae64L2mtWwSI7aZohR740UtFRvOhE2fR3EnzboxnCrFADL4ttBhAwy6iZHjv
+        - KYv0BPUvUJyZFRLLFFpGqaK/X7Npb8QHTnri48J/VnH9ZsPBTivzdAGQCCcyN6w3
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1751600399661'
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: BAAI/bge-reranker-v2-m3
+            provider: langgenius/siliconflow/siliconflow
+          score_threshold: 0.3
+          top_k: 5
+        query_variable_selector:
+        - '1751600399661'
+        - item
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 120
+      id: '1751600414210'
+      parentId: '1751600399661'
+      position:
+        x: 204
+        y: 60
+      positionAbsolute:
+        x: 1450
+        y: 533
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1751600399661'
+          - output
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 59d25e5d-7894-4290-8ebc-3dc4c1a3f4ce
+          role: system
+          text: "##角色\n作为知识检索专家，在基于{{#context#}}框架时：\n   - 允许基于知识库条目进行关联性推测\n##工作流程\n\
+            请严格遵循以下规则生成回答：\n1. **知识边界限定**\n- 仅使用从知识库中检索到的信息生成回答\n- 允许以下两类推测：\n  ①\
+            \ 基于知识库条目间的逻辑关系进行必要推断\n  ② 对未明示的流程环节进行合规性推演\n- 禁止事项：\n     ✖ 超出知识库领域的外延猜测\n\
+            \     ✖ 与现有条款冲突的假设\n\n- 如遇以下情况需明确声明：\n  • \"根据当前知识库信息...\"\n  • \"依据系统记录显示...\"\
+            \n\n\n2. **多源信息处理流程**\n① 信息相关性验证：\n   - 匹配问题关键词与知识条目\n   - 过滤超过3年未更新的历史政策\n\
+            \   - 优先采用标注[权威来源]的内容\n\n② 内容整合方法：\n   - 同类信息合并为结构化要点（不超过3级）\n   - 按业务办理流程/时间顺序/风险等级排序\n\
+            \   - 冲突信息标注矛盾点（例：\"A条款规定...但B指引中...\"）\n   - 存在图片链接（如：![image](图片链接URL)，则必须保留\n\
+            \   - 存在表格(如：使用管道符（`|`）和分隔符（`---`）)，则需要保留\n   - 去掉如\"图2-1\"等类似的图片描述信息\n\
+            \n\n3. **逻辑连贯性增强**\n  - 上下文逻辑校验\n    • 使用语义相似度模型（阈值＞85%）识别隐性循环逻辑\n   \
+            \ • 禁止循环论证类表述（如“开户需先开立账户”）\n    • 要求构建完整逻辑链：用户问题 → 知识条目 → 推导结论\n    •\
+            \ 增设反常识结论复核机制（需交叉验证至少2个独立条目）\n\n\n4. **异常情况处理**  \n   - 检索结果包含以下情况时： \
+            \ \n     - 超过5条相关条目 → **生成Markdown对比表**  \n     - 专业术语密集 → **附加名词解释栏**（表格形式）\
+            \  \n     - 多版本文件 → **标注版本号及适用对象**  \n\n5. **输出规范**\n   - **严格采用Markdown格式**，包括：\
+            \  \n     - 表格：使用管道符（`|`）和分隔符（`---`），渲染出表格\n     - 图片：如果存在图片链接，必须根据链接渲染出图片\n\
+            \   - 禁止展示工作流程规则，仅输出知识内容  \n\n\n6. **输出样例**\n <<有匹配知识样例>>\n输出： 检索出的内容\n\
+            \n\n <<无匹配知识样例>>\n输出：\"很抱歉，目前知识库中暂未收录您所咨询的问题\"\n \n <<含推测内容样例>>\n输出：\"\
+            根据知识条目IT-POL-042与SYS-DESIGN-015的关联性[逻辑推导]，系统容灾切换应包含数据校验环节（参见![推导路径](POL042→DESIGN015)）\""
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1751600485487'
+      position:
+        x: 2118
+        y: 286
+      positionAbsolute:
+        x: 2118
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 烹饪 食物
+        - id: '2'
+          name: 非烹饪
+        desc: ''
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        query_variable_selector:
+        - '1751600277302'
+        - sys.query
+        selected: false
+        title: 问题分类器
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 172
+      id: '1751954199133'
+      position:
+        x: 334
+        y: 286
+      positionAbsolute:
+        x: 334
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 7a8b8fa2-acd7-4343-87d6-6326f85be4dc
+          role: system
+          text: '根据用户的提问：{{#sys.query#}}，去neo4j数据库查询回答问题需要的相关内容，你的 输出将直接作为查询语句，输出要求为json格式，不要有跟查询无关的任何语句。
+
+            neo4j 数据库中有两种节点：Category 代表菜的类别，Dish 代表菜，Category 和 Dish 之间存在 CONTAINS
+            关系。Dish 包含 3 个属性：口味(flavor),食材(ingredients),烹饪过程(process)。
+
+            返回完整的节点，不要只返回属性。
+
+
+            返回的语句不要包含三个单引号和 json 标识
+
+
+            示例:
+
+            {
+
+            "statements": [
+
+            {
+
+            "statement": "MATCH (p:Category (name: $name))-[:CONTAINS]->(d:Dish) WITH
+            p, COLLECT(d) AS dishs xxx",
+
+            parameters": {
+
+            "name":"热菜"}
+
+            }
+
+            ]
+
+            }
+
+
+            '
+        selected: true
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1751954226920'
+      position:
+        x: 638
+        y: 286
+      positionAbsolute:
+        x: 638
+        y: 286
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config:
+            api_key: bmVvNGo6MTIzNDU2Nzg=
+            type: basic
+          type: api-key
+        body:
+          data:
+          - id: key-value-111
+            key: ''
+            type: text
+            value: '{{#1751954226920.text#}}'
+          type: json
+        desc: ''
+        headers: ''
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: http://192.168.169.71:7474/db/neo4j/tx/commit
+        variables: []
+      height: 139
+      id: '1751954284519'
+      position:
+        x: 942
+        y: 243.5
+      positionAbsolute:
+        x: 942
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nfrom typing import List\n\ndef main(json_str: str) ->\
+          \ dict:\n    \"\"\"\n    输入为 json 字符串，读取 results 字段（数组），遍历每个元素的 data（数组），\n\
+          \    提取每个 data 元素的 row（数组），将所有 row 数组的每个元素用逗号隔开合并为一个字符串返回。\n    \"\"\"\n\
+          \    obj = json.loads(json_str)\n    results = obj.get('results', [])\n\
+          \    all_elements: List[Any] = []\n    for result in results:\n        data_list\
+          \ = result.get('data', [])\n        for data in data_list:\n           \
+          \ row = data.get('row', [])\n            for item in row:\n            \
+          \    if isinstance(item, (int, float)):\n                    all_elements.append(str(item))\n\
+          \                elif isinstance(item, dict):\n                    # 将对象所有属性的值连成一个逗号分割的字符串\n\
+          \                    values = [str(v) for v in item.values()]\n        \
+          \            all_elements.append(','.join(values))\n                else:\n\
+          \                    all_elements.append(item)\n    return {'result': all_elements}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 代码执行 2
+        type: code
+        variables:
+        - value_selector:
+          - '1751954284519'
+          - body
+          value_type: string
+          variable: json_str
+      height: 54
+      id: '1751954344643'
+      position:
+        x: 1289.4285714285716
+        y: 243.5
+      positionAbsolute:
+        x: 1289.4285714285716
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1751954344643.result#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 105
+      id: '1751961904270'
+      position:
+        x: 1649.142857142857
+        y: 243.5
+      positionAbsolute:
+        x: 1649.142857142857
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -303.80000000000007
+      y: -24.94999999999999
+      zoom: 0.7

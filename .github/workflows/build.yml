@@ -78,7 +78,7 @@ jobs:
         fi
     
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ragflow-client-${{ matrix.name }}
         path: ragflow_api_client/release/
@@ -103,7 +103,7 @@ jobs:
     
     steps:
     - name: Download all artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
     
     - name: Create distribution packages
       run: |
@@ -125,7 +125,7 @@ jobs:
         ls -la *.zip *.tar.gz
     
     - name: Upload distribution packages
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ragflow-client-all-platforms
         path: |

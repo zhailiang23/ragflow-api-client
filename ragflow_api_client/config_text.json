@@ -1,0 +1,53 @@
+{
+  "api": {
+    "base_url": "http://localhost:9380",
+    "api_key": "ragflow-QyZDZhOGE4NmQwZjExZjA5NzNhNTY4Mj"
+  },
+  "dataset": {
+    "name": "kb-text-code",
+    "avatar": null,
+    "description": "这是一个代码生成的文本知识库",
+    "embedding_model": "BAAI/bge-large-zh-v1.5@BAAI",
+    "permission": "me",
+    "chunk_method": "naive",
+    "parser_config": {
+      "chunk_token_num": 512,
+      "delimiter": "\\n",
+      "html4excel": false,
+      "layout_recognize": "DeepDOC",
+      "raptor": {
+        "use_raptor": false
+      }
+    }
+  },
+  "document": {
+    "file_paths": [
+      "./test_data/document1.txt"
+    ],
+    "wait_for_parsing": true,
+    "parsing_wait": {
+      "max_wait_time": 300,
+      "check_interval": 5
+    }
+  },
+  "retrieval": {
+    "page": 1,
+    "page_size": 30,
+    "similarity_threshold": 0.2,
+    "vector_similarity_weight": 0.3,
+    "top_k": 1024,
+    "rerank_id": null,
+    "keyword": false,
+    "highlight": false,
+    "test_questions": [
+      "什么是RAGFlow？",
+      "RAGFlow有什么特点？",
+      "如何使用RAGFlow？"
+    ]
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "ragflow_client.log",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}

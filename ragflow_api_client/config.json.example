@@ -1,0 +1,84 @@
+{
+  "_comment": "RAGFlow API 客户端配置文件",
+  "api": {
+    "_comment": "RAGFlow API 基础URL，例如: http://localhost:9380 或 https://api.ragflow.com",
+    "base_url": "http://localhost:9380",
+    "_comment_api_key": "API密钥，请替换为您的实际API密钥，可以从RAGFlow管理界面获取",
+    "api_key": "YOUR_API_KEY_HERE"
+  },
+  "dataset": {
+    "_comment_name": "知识库名称，必须唯一，最多128个字符，不区分大小写",
+    "name": "my_knowledge_base",
+    "_comment_avatar": "知识库头像（Base64编码），可选，最多65535个字符",
+    "avatar": null,
+    "_comment_description": "知识库描述，可选，最多65535个字符",
+    "description": "这是一个测试知识库",
+    "_comment_embedding_model": "嵌入模型，格式: model_name@model_factory",
+    "embedding_model": "BAAI/bge-large-zh-v1.5@BAAI",
+    "_comment_permission": "权限设置，可选值: me（仅自己）, team（团队成员）",
+    "permission": "me",
+    "_comment_chunk_method": "分块方法，可选值: naive（通用）, qa（问答）, table（表格）, paper（论文）等",
+    "chunk_method": "naive",
+    "_comment_parser_config": "解析器配置（根据chunk_method不同而不同）",
+    "parser_config": {
+      "_comment_chunk_token_num": "分块token数量（1-2048）",
+      "chunk_token_num": 128,
+      "_comment_delimiter": "分隔符",
+      "delimiter": "\\n",
+      "_comment_html4excel": "是否将Excel转换为HTML格式",
+      "html4excel": false,
+      "_comment_layout_recognize": "布局识别",
+      "layout_recognize": "DeepDOC",
+      "_comment_raptor": "RAPTOR相关设置",
+      "raptor": {
+        "use_raptor": false
+      }
+    }
+  },
+  "document": {
+    "_comment_file_paths": "要上传的文件路径列表，支持相对路径和绝对路径",
+    "file_paths": [
+      "./test_data/document1.txt"
+    ],
+    "_comment_wait_for_parsing": "是否等待文档解析完成",
+    "wait_for_parsing": true,
+    "_comment_parsing_wait": "解析等待配置",
+    "parsing_wait": {
+      "_comment_max_wait_time": "最大等待时间（秒）",
+      "max_wait_time": 300,
+      "_comment_check_interval": "检查间隔（秒）",
+      "check_interval": 5
+    }
+  },
+  "retrieval": {
+    "_comment_pagination": "分页设置",
+    "page": 1,
+    "page_size": 30,
+    "_comment_similarity_threshold": "相似度阈值（0-1）",
+    "similarity_threshold": 0.2,
+    "_comment_vector_similarity_weight": "向量相似度权重（0-1），如果x表示向量余弦相似度，则(1-x)是词项相似度权重",
+    "vector_similarity_weight": 0.3,
+    "_comment_top_k": "参与向量余弦计算的文本块数量",
+    "top_k": 1024,
+    "_comment_rerank_id": "重排序模型ID（可选）",
+    "rerank_id": null,
+    "_comment_keyword": "是否启用基于关键词的匹配",
+    "keyword": false,
+    "_comment_highlight": "是否高亮匹配的词项",
+    "highlight": false,
+    "_comment_test_questions": "测试查询问题列表",
+    "test_questions": [
+      "什么是RAGFlow？",
+      "RAGFlow有什么特点？",
+      "如何使用RAGFlow？"
+    ]
+  },
+  "logging": {
+    "_comment_level": "日志级别: DEBUG, INFO, WARNING, ERROR, CRITICAL",
+    "level": "INFO",
+    "_comment_file": "日志文件路径",
+    "file": "ragflow_client.log",
+    "_comment_format": "日志格式",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}

@@ -1,0 +1,130 @@
+name: Build RAGFlow Client
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            executable: ragflow-client.exe
+            name: windows
+          - os: ubuntu-latest  
+            executable: ragflow-client
+            name: linux
+          - os: macos-latest
+            executable: ragflow-client
+            name: macos
+        
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests==2.31.0
+        pip install pyinstaller
+    
+    - name: Build with PyInstaller
+      run: pyinstaller --clean ragflow_client.spec
+    
+    - name: Verify build output
+      shell: bash
+      run: |
+        if [ -f "dist/${{ matrix.executable }}" ]; then
+          echo "✅ Build successful!"
+          echo "📁 File: dist/${{ matrix.executable }}"
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            powershell -command "Get-Item dist/${{ matrix.executable }} | Select-Object Name, Length"
+          else
+            ls -lh dist/${{ matrix.executable }}
+          fi
+        else
+          echo "❌ Build failed - executable not found!"
+          ls -la dist/ || echo "dist/ directory not found"
+          exit 1
+        fi
+    
+    - name: Create release package
+      shell: bash
+      run: |
+        mkdir -p release
+        cp dist/${{ matrix.executable }} release/
+        cp config.json.example release/
+        cp README.md release/
+        cp PACKAGING.md release/
+        if [ -d "test_data" ]; then
+          cp -r test_data release/
+        fi
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ragflow-client-${{ matrix.name }}
+        path: release/
+        retention-days: 30
+    
+    - name: Upload to release (if this is a release)
+      if: github.event_name == 'release'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: dist/${{ matrix.executable }}
+        asset_name: ragflow-client-${{ matrix.name }}${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+        asset_content_type: application/octet-stream
+
+  # 创建所有平台的压缩包
+  package:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+    
+    - name: Create distribution packages
+      run: |
+        # 创建Windows包
+        cd ragflow-client-windows
+        zip -r ../ragflow-client-windows.zip .
+        cd ..
+        
+        # 创建Linux包  
+        cd ragflow-client-linux
+        tar -czf ../ragflow-client-linux.tar.gz .
+        cd ..
+        
+        # 创建macOS包
+        cd ragflow-client-macos  
+        tar -czf ../ragflow-client-macos.tar.gz .
+        cd ..
+        
+        ls -la *.zip *.tar.gz
+    
+    - name: Upload distribution packages
+      uses: actions/upload-artifact@v3
+      with:
+        name: ragflow-client-all-platforms
+        path: |
+          ragflow-client-windows.zip
+          ragflow-client-linux.tar.gz
+          ragflow-client-macos.tar.gz

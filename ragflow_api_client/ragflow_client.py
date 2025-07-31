@@ -251,27 +251,31 @@ class RAGFlowClient:
     def run_complete_workflow(self):
         """
         运行完整的工作流程：
-        1. 创建或获取知识库
-        2. 上传文档
-        3. 解析文档
+        1. 检查知识库是否存在
+        2. 如果不存在，创建知识库后退出
+        3. 如果存在，上传文档并解析
         """
         try:
-            # 1. 创建或获取知识库
-            self.logger.info("=== 步骤1：创建或获取知识库 ===")
+            # 1. 检查知识库是否已存在
+            self.logger.info("=== 步骤1：检查知识库是否存在 ===")
             dataset_name = self.config['dataset']['name']
             
-            # 首先检查知识库是否已存在
+            # 检查知识库是否已存在
             existing_datasets = self.list_datasets(name=dataset_name)
             
-            if existing_datasets:
-                # 使用现有的知识库
-                dataset = existing_datasets[0]
-                dataset_id = dataset['id']
-                self.logger.info(f"使用现有知识库: {dataset_name} (ID: {dataset_id})")
-            else:
-                # 创建新知识库
+            if not existing_datasets:
+                # 知识库不存在，创建新知识库
+                self.logger.info(f"知识库 '{dataset_name}' 不存在，开始创建...")
                 dataset = self.create_dataset()
                 dataset_id = dataset['id']
+                self.logger.info(f"知识库创建成功，ID: {dataset_id}")
+                self.logger.info("=== 工作流程结束：知识库已创建 ===")
+                return
+            
+            # 知识库已存在，继续处理文档
+            dataset = existing_datasets[0]
+            dataset_id = dataset['id']
+            self.logger.info(f"知识库 '{dataset_name}' 已存在 (ID: {dataset_id})，继续处理文档...")
             
             # 2. 上传文档
             self.logger.info("=== 步骤2：上传文档 ===")
